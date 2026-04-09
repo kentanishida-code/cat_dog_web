@@ -1,17 +1,15 @@
-// app/layout.tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body>
-        <ol className="breadcrumb">
-        <header>HOME</header>
-        </ol>
         <main>{children}</main>
         <nav>
           <ol>
-          <li><a href="/about/">動物選択へ</a></li>
+          <li><a href="https://random-cat-jexp.vercel.app/">猫を見る</a></li>
+          <li><a href="https://random-dog-opal.vercel.app/">犬を見る</a></li>
           </ol>
         </nav>
+
       </body>
     </html>
   );
