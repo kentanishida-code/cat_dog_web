@@ -12,13 +12,16 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         {children}
+        <ol>
         <li><button type="button" onClick={() => router.push('animal/cat')}>
-          猫
+          猫🐈
         </button></li>
         <li><button type="button" onClick={() => router.push('animal/dog')}>
-          犬
+          犬🐕
         </button></li>
+        </ol>
       </body>
     </html>
   );
 }
+
