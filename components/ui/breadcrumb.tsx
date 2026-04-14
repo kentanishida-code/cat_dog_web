@@ -1,122 +1,52 @@
-import * as React from "react"
-import { Slot } from "radix-ui"
+'use client';
 
-import { cn } from "@/lib/utils"
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { useRouter, usePathname } from 'next/navigation';
 
-function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
-  return (
-    <nav
-      aria-label="breadcrumb"
-      data-slot="breadcrumb"
-      className={cn(className)}
-      {...props}
-    />
-  )
-}
+export default function Breadcrumb() {
+  const router = useRouter();
+  const pathname = usePathname();
 
-function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
-  return (
-    <ol
-      data-slot="breadcrumb-list"
-      className={cn(
-        "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+  const paths = pathname.split('/').filter(Boolean);
 
-function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
-  return (
-    <li
-      data-slot="breadcrumb-item"
-      className={cn("inline-flex items-center gap-1", className)}
-      {...props}
-    />
-  )
-}
-
-function BreadcrumbLink({
-  asChild,
-  className,
-  ...props
-}: React.ComponentProps<"a"> & {
-  asChild?: boolean
-}) {
-  const Comp = asChild ? Slot.Root : "a"
+  const nameMap: Record<string, string> = {
+    animal: '動物一覧',
+    dog: '犬',
+    cat: '猫',
+  };
 
   return (
-    <Comp
-      data-slot="breadcrumb-link"
-      className={cn("transition-colors hover:text-foreground", className)}
-      {...props}
-    />
-  )
-}
+    <nav className="mb-4" aria-label="パンくずリスト">
+      <ol className="flex text-sm text-gray-600">
+        <li>
+          <button onClick={() => router.push('/')}
+            className="hover:underline">ホーム</button>
+          {paths.length > 0 && <span className="mx-2">＞</span>}
+        </li>
+        {paths.map((path, index) => {
+          const href = '/' + paths.slice(0, index + 1).join('/');
+          const isLast = index === paths.length - 1;
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
-      aria-current="page"
-      className={cn("font-normal text-foreground", className)}
-      {...props}
-    />
-  )
-}
+          const label = nameMap[path] || path; // ← 日本語変換
 
-function BreadcrumbSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
-  return (
-    <li
-      data-slot="breadcrumb-separator"
-      role="presentation"
-      aria-hidden="true"
-      className={cn("[&>svg]:size-3.5", className)}
-      {...props}
-    >
-      {children ?? (
-        <ChevronRightIcon />
-      )}
-    </li>
-  )
-}
-
-function BreadcrumbEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="breadcrumb-ellipsis"
-      role="presentation"
-      aria-hidden="true"
-      className={cn(
-        "flex size-5 items-center justify-center [&>svg]:size-4",
-        className
-      )}
-      {...props}
-    >
-      <MoreHorizontalIcon
-      />
-      <span className="sr-only">More</span>
-    </span>
-  )
-}
-
-export {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  BreadcrumbEllipsis,
+          return (
+            <li key={index}>
+              {isLast ? (
+                <span className="text-gray-900">{label}</span>
+              ) : (
+                <>
+                  <button
+                    onClick={() => router.push(href)}
+                    className="hover:underline"
+                  >
+                    {label}
+                  </button>
+                  <span className="mx-2">＞</span>
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
 }

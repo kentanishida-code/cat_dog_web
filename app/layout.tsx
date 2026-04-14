@@ -1,11 +1,6 @@
-'use client';
-
-import { useRouter } from 'next/navigation'
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-import NavBreadcrumb from '@/components/ui/nav-breadcrumb';
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import NavBreadcrumb from '@/components/ui/breadcrumb';
+import MoveButton from '@/components/ui/move_button';
+import "./globals.css";
 
 
 export default function RootLayout({
@@ -13,17 +8,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter()
   return (
-    <html lang="ja" className={cn("font-sans", geist.variable)}>
+    <html lang="ja">
       <body>
         <header>
-          <NavBreadcrumb />
+        <NavBreadcrumb />
         </header>
         {children}
-        <button type="button" onClick={() => router.push('/animal')}>
-          動物選択
-        </button>
+        <MoveButton />
       </body>
     </html>
   );
