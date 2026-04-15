@@ -1,9 +1,14 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-export default function Breadcrumb() {
-  const router = useRouter();
+export type BreadcrumbItem = {
+  label: string;
+  href: string;
+  isLast: boolean;
+};
+
+export default function useBreadcrumb(): BreadcrumbItem[] {
   const pathname = usePathname();
 
   const paths = pathname.split('/').filter(Boolean);
@@ -14,39 +19,24 @@ export default function Breadcrumb() {
     cat: '猫',
   };
 
-  return (
-    <nav className="mb-4" aria-label="パンくずリスト">
-      <ol className="flex text-sm text-gray-600">
-        <li>
-          <button onClick={() => router.push('/')}
-            className="hover:underline">ホーム</button>
-          {paths.length > 0 && <span className="mx-2">＞</span>}
-        </li>
-        {paths.map((path, index) => {
-          const href = '/' + paths.slice(0, index + 1).join('/');
-          const isLast = index === paths.length - 1;
+  const items: BreadcrumbItem[] = [];
 
-          const label = nameMap[path] || path; // ← 日本語変換
+  items.push({
+    label: 'ホーム',
+    href: '/',
+    isLast: paths.length === 0,
+  });
 
-          return (
-            <li key={index}>
-              {isLast ? (
-                <span className="text-gray-900">{label}</span>
-              ) : (
-                <>
-                  <button
-                    onClick={() => router.push(href)}
-                    className="hover:underline"
-                  >
-                    {label}
-                  </button>
-                  <span className="mx-2">＞</span>
-                </>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
+  paths.forEach((path, index) => {
+    const href = '/' + paths.slice(0, index + 1).join('/');
+    const isLast = index === paths.length - 1;
+
+    items.push({
+      label: nameMap[path] || path,
+      href,
+      isLast,
+    });
+  });
+
+  return items;
 }

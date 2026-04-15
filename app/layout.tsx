@@ -1,17 +1,18 @@
-import NavBreadcrumb from '@/components/ui/breadcrumb';
+import NavBreadcrumb from '@/components/ui/nav-breadcrumb';
 import MoveButton from '@/components/ui/move_button';
-import "./globals.css";
+import type { ReactNode } from 'react';
+import './globals.css';
 
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="ja">
       <body>
-        <header>
+        <header className="bg-white border-b p-4">
         <NavBreadcrumb />
         </header>
         {children}
@@ -20,4 +21,3 @@ export default function RootLayout({
     </html>
   );
 }
-
