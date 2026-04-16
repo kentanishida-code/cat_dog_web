@@ -1,5 +1,5 @@
-import NavBreadcrumb from '@/components/ui/nav-breadcrumb';
-import MoveButton from '@/components/ui/move_button';
+import BreadcrumbContainer from '@/components/ui/breadcrumb/BreadcrumbContainer';
+import MoveButton from '@/components/ui/movebutton/MoveButton';
 import type { ReactNode } from 'react';
 import './globals.css';
 
@@ -13,7 +13,7 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <header className="bg-white border-b p-4">
-        <NavBreadcrumb />
+        <BreadcrumbContainer />
         </header>
         {children}
         <MoveButton />
