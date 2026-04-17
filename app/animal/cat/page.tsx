@@ -1,9 +1,11 @@
 import { connection } from "next/server";
 import { CatImage } from "./cat-image";
-import { fetchImage } from "./fetch-image";
- 
+import { fetchCatImage } from "@/lib/api/animalImage";
+
 export default async function Home() {
   await connection();
-  const image = await fetchImage();
-  return <CatImage url={image.url} />;
+
+  const imageUrl = await fetchCatImage();
+
+  return <CatImage url={imageUrl} />;
 }

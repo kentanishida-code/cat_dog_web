@@ -1,28 +1,32 @@
 "use client";
- 
+
 import { useState } from "react";
-import { fetchImage } from "./fetch-image";
+import { fetchDogImage } from "@/lib/api/animalImage";
 import styles from "./page.module.css";
- 
+
 type DogImageProps = {
-  message: string;
+  url: string;
 };
- 
-export function DogImage({ message }: DogImageProps) {
-  const [imageUrl, setImageUrl] = useState(message);
- 
+
+export function DogImage({ url }: DogImageProps) {
+  const [imageUrl, setImageUrl] = useState(url);
+
   const refreshImage = async () => {
-    setImageUrl(""); 
-    const image = await fetchImage();
-    setImageUrl(image.message);
+    setImageUrl(""); // ローディング用
+    const newUrl = await fetchDogImage();
+    setImageUrl(newUrl);
   };
+
   return (
     <div className={styles.page}>
       <button onClick={refreshImage} className={styles.button}>
         他のわんこも見る
       </button>
+
       <div className={styles.frame}>
-        {imageUrl && <img src={imageUrl} className={styles.img} />}
+        {imageUrl && (
+          <img src={imageUrl} className={styles.img} alt="犬の画像" />
+        )}
       </div>
     </div>
   );
