@@ -12,8 +12,8 @@ export function CatImage({ url }: CatImageProps) {
   const [imageUrl, setImageUrl] = useState<string>(url);
 
   const refreshImage = async () => {
-    setImageUrl(""); // ローディング用リセット
-    const newUrl = await fetchCatImage(); // ← URL直接取得
+    setImageUrl(""); 
+    const newUrl = await fetchCatImage(); 
     setImageUrl(newUrl);
   };
 

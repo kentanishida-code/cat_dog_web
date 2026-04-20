@@ -1,5 +1,4 @@
-import { fetchJson } from "./fetchImage";
-
+import { fetchImage } from "./common";
 
 type CatResponse = {
   url: string;
@@ -9,19 +8,15 @@ type DogResponse = {
   message: string;
 };
 
-export async function fetchCatImage(): Promise<string> {
-  const data = await fetchJson<CatResponse>(
-    "https://api.thecatapi.com/v1/images/search"
-  );
+export const API_URLS = {
+  cat: "https://api.thecatapi.com/v1/images/search",
+  dog: "https://dog.ceo/api/breeds/image/random",
+} as const;
 
-  return data[0].url;
+export async function fetchCatImage(): Promise<string> {
+  return fetchImage<CatResponse>(API_URLS.cat, (data) => data[0].url);
 }
 
-// 犬
 export async function fetchDogImage(): Promise<string> {
-  const data = await fetchJson<DogResponse>(
-    "https://dog.ceo/api/breeds/image/random"
-  );
-
-  return data.message;
+  return fetchImage<DogResponse>(API_URLS.dog, (data) => data.message);
 }

@@ -12,7 +12,7 @@ export function DogImage({ url }: DogImageProps) {
   const [imageUrl, setImageUrl] = useState(url);
 
   const refreshImage = async () => {
-    setImageUrl(""); // ローディング用
+    setImageUrl("");
     const newUrl = await fetchDogImage();
     setImageUrl(newUrl);
   };
