@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { fetchDogImage } from "@/lib/api/animalImage";
+import { fetchDogImage } from "@/lib/api/fetch-image";
 import styles from "./page.module.css";
 
 type DogImageProps = {

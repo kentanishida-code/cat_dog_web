@@ -1,3 +1,5 @@
+// 汎用fetch処理
+
 "use server";
 
 export async function fetchJson<T>(url: string): Promise<T> {

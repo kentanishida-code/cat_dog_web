@@ -1,6 +1,6 @@
 import { connection } from "next/server";
 import { DogImage } from "./dog-image";
-import { fetchDogImage } from "@/lib/api/animalImage";
+import { fetchDogImage } from "@/lib/api/fetch-image";
 
 export default async function Home() {
   await connection();

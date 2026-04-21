@@ -1,3 +1,8 @@
+// 猫・犬などの具体API
+
+"use server";
+
+import { API_URLS } from "./animal-url";
 import { fetchImage } from "./common";
 
 type CatResponse = {
@@ -7,11 +12,6 @@ type CatResponse = {
 type DogResponse = {
   message: string;
 };
-
-export const API_URLS = {
-  cat: "https://api.thecatapi.com/v1/images/search",
-  dog: "https://dog.ceo/api/breeds/image/random",
-} as const;
 
 export async function fetchCatImage(): Promise<string> {
   return fetchImage<CatResponse>(API_URLS.cat, (data) => data[0].url);

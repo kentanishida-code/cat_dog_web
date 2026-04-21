@@ -1,4 +1,6 @@
-import { fetchJson } from "./fetchImage";
+// 共通ロジック（picker）
+
+import { fetchJson } from "./fetch-json";
 
 export async function fetchImage<T>(
   url: string,
